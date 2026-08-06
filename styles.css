@@ -361,10 +361,6 @@ strong {
   margin-top: 0;
 }
 
-.project-evidence .detail-link {
-  margin-top: 0.7rem;
-}
-
 .project-evidence {
   display: grid;
   align-content: start;
