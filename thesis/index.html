@@ -78,7 +78,7 @@
           <div class="case-copy case-copy--lead">
             <p>Snake robots can reach places that are difficult for wheeled or legged machines, but a gait that works on one surface may fail on another. I investigated whether the robot could become more robust by adapting both <em>how it moves</em> and <em>how its body contacts the ground</em>.</p>
             <blockquote>
-              <p>Does spatial heterogeneity in passive scale design improve terrain-robust locomotion?</p>
+              <p>Are heterogeneous passive scale configurations more terrain-robust than homogeneous ones, and can critic-guided local refinement improve the best observed design?</p>
             </blockquote>
             <p>The comparison covered homogeneous configurations, where every scale used the same geometry, and heterogeneous configurations that alternated between two designs.</p>
           </div>
@@ -159,14 +159,14 @@
                 <span class="method-number">02</span>
                 <div>
                   <h3>Learn the gait</h3>
-                  <p>A Soft Actor-Critic agent learned locomotion for each scale configuration, with repeated trials on carpet and cardboard.</p>
+                  <p>For each scale configuration, separate terrain-specific Soft Actor-Critic agents learned on carpet and cardboard.</p>
                 </div>
               </li>
               <li>
                 <span class="method-number">03</span>
                 <div>
                   <h3>Refine the body</h3>
-                  <p>The learned critic estimated candidate morphologies. Particle swarm optimisation then proposed a design intended to improve the weaker terrain.</p>
+                  <p>A population critic ensemble scored candidate morphologies. Particle swarm optimisation then proposed a design intended to improve worst-terrain performance.</p>
                 </div>
               </li>
               <li>
@@ -186,15 +186,15 @@
             <h2 id="results-title">Results</h2>
           </div>
           <div class="case-copy case-copy--lead">
-            <p>The strongest result came from the lower-dimensional homogeneous search. Optimisation raised its worst-terrain displacement from <strong>28.2 cm to 54.4 cm</strong>. The best unrefined heterogeneous design was already robust at <strong>50.4 cm</strong>, but its subsequent refinement did not transfer to the robot.</p>
+            <p>The strongest result came from the lower-dimensional homogeneous search. Optimisation raised its worst-terrain best-5 displacement from <strong>28.2 cm to 54.4 cm</strong>. The best unrefined heterogeneous design was already robust at <strong>50.4 cm</strong>, but its subsequent refinement did not transfer to the robot.</p>
           </div>
         </section>
 
         <figure class="visual-panel results-panel container-wide">
           <svg class="results-chart" viewBox="0 0 900 470" role="img" aria-labelledby="chart-title chart-desc">
-            <title id="chart-title">Worst-terrain displacement before and after refinement</title>
-            <desc id="chart-desc">For the homogeneous design, displacement improved from 28.2 to 54.4 centimetres. For the heterogeneous design, the strong initial result of 50.4 centimetres fell to 6.6 centimetres after an unsuccessful refinement.</desc>
-            <text x="62" y="54" class="chart-kicker">WORST-TERRAIN DISPLACEMENT · CM · HIGHER IS BETTER</text>
+            <title id="chart-title">Worst-terrain best-5 displacement before and after refinement</title>
+            <desc id="chart-desc">For the homogeneous design, worst-terrain best-5 displacement improved from 28.2 to 54.4 centimetres. For the heterogeneous design, the strong initial result of 50.4 centimetres fell to 6.6 centimetres after an unsuccessful refinement.</desc>
+            <text x="62" y="54" class="chart-kicker">WORST-TERRAIN BEST-5 DISPLACEMENT · CM · HIGHER IS BETTER</text>
 
             <g class="chart-grid">
               <line x1="90" y1="370" x2="848" y2="370"/>
@@ -246,7 +246,7 @@
           </div>
           <div class="case-copy">
             <p>The heterogeneous optimiser proposed a configuration whose worst-terrain result dropped from 50.4 cm to 6.6 cm. This was not hidden or averaged away.</p>
-            <p>The likely issue was coverage. A heterogeneous body created a four-dimensional morphology space, while the available physical trials covered only a small part of it. The critic could guide refinement in the simpler homogeneous space, but its estimates were not reliable enough in the larger search.</p>
+            <p>The likely issue was coverage. A heterogeneous body created a four-dimensional morphology space, while the available physical trials covered only a small part of it. The tested refinement improved the simpler homogeneous design, but not the larger heterogeneous search.</p>
             <aside class="finding-note">
               <p class="small-label">Interpretation</p>
               <p>Passive heterogeneity can produce strong locomotion, but this study did not show that it is always necessary or easier to optimise.</p>
@@ -260,7 +260,7 @@
             <h2 id="hardware-title">Real hardware</h2>
           </div>
           <div class="case-copy">
-            <p>The experimental work was as much about making the system dependable as it was about training policies. Motors overheated, one had to be replaced, TPU scales needed repeated printing, and small physical changes could alter a run. Parts of the control code were also undocumented.</p>
+            <p>The experimental work was as much about making the system dependable as it was about training policies. Motors overheated or became overloaded, some had to be swapped, and TPU printing required drying the filament and tuning print settings. The existing control code was also undocumented.</p>
             <p>Working through those failures changed how I evaluate an AI result: a promising metric is only useful if the full system can reproduce it outside the optimiser.</p>
 
             <dl class="tools-list">
@@ -279,7 +279,7 @@
             <h2 id="conclusion-title">Takeaway</h2>
           </div>
           <div class="case-copy case-copy--lead">
-            <p>Co-adaptation worked when the morphology search was constrained and sufficiently represented by real trials. The project also showed where it stopped working: a higher-dimensional design space needs broader data or a more cautious refinement method.</p>
+            <p>In this study, critic-guided refinement improved the two-dimensional homogeneous search, but not the four-dimensional heterogeneous search. More physical designs would be needed before drawing a broader conclusion.</p>
             <a class="detail-link" href="/"><span aria-hidden="true">←</span> Back to selected work</a>
           </div>
         </section>
