@@ -177,7 +177,6 @@ strong {
 .eyebrow,
 .project-type,
 .small-label,
-.status-label,
 .chart-kicker,
 .svg-label,
 .terrain-label,
@@ -193,7 +192,6 @@ strong {
 .eyebrow,
 .project-type,
 .small-label,
-.status-label,
 .section-index {
   color: var(--muted);
 }
@@ -291,6 +289,10 @@ strong {
   color: var(--quiet);
   font-family: var(--mono);
   font-size: 0.68rem;
+}
+
+.project-body--wide {
+  grid-column: 2 / -1;
 }
 
 .project-body h3 {
@@ -394,22 +396,6 @@ strong {
 
 .project-evidence dd span {
   font-size: 1.3rem;
-}
-
-.project-evidence .evidence-copy,
-.project-evidence--note p:last-child {
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.55;
-}
-
-.project-evidence--note {
-  padding-top: 2.9rem;
-  border-top: 1px solid var(--line);
-}
-
-.project-evidence--note .status-label {
-  margin-bottom: 0.5rem;
 }
 
 .about-content {
@@ -877,10 +863,6 @@ strong {
     padding-top: 0.8rem;
   }
 
-  .project-evidence--note {
-    display: block;
-    padding-top: 1rem;
-  }
 }
 
 @media (max-width: 640px) {
@@ -925,16 +907,16 @@ strong {
     grid-column: 1;
   }
 
+  .project-body--wide {
+    grid-column: 1;
+  }
+
   .project-evidence {
     grid-template-columns: 1fr 1fr;
   }
 
   .project-evidence > div:last-child:nth-child(3) {
     grid-column: 1 / -1;
-  }
-
-  .project-evidence--note {
-    grid-template-columns: 1fr;
   }
 
   .education-block,
