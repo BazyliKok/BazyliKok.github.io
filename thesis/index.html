@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="A case study of Bazyli Kok's bachelor thesis on co-adapting passive scales and reinforcement-learning controllers for terrain-robust snake-robot locomotion.">
+
+    <title>Snake Robot Thesis — Bazyli Kok</title>
+    <link rel="canonical" href="https://bazylikok.github.io/thesis/">
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Terrain-Robust Snake Robot — Bazyli Kok">
+    <meta property="og:description" content="Physical robotics, Soft Actor-Critic, passive scale design, and critic-guided optimisation.">
+    <meta property="og:url" content="https://bazylikok.github.io/thesis/">
+    <meta property="og:image" content="https://bazylikok.github.io/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bazyli Kok — snake robot bachelor thesis case study">
+    <meta name="twitter:card" content="summary_large_image">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/" aria-label="BK. — Bazyli Kok, home">BK<span aria-hidden="true">.</span></a>
+        <nav aria-label="Primary">
+          <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <article>
+        <header class="case-hero container">
+          <a class="back-link" href="/"><span aria-hidden="true">←</span> Selected work</a>
+          <p class="eyebrow">Bachelor thesis · Physical robotics · 2026</p>
+          <h1>Terrain-robust locomotion for a snake robot</h1>
+          <p class="case-subtitle">Co-adapting a reinforcement-learning controller and passive scale design on real hardware.</p>
+
+          <dl class="case-facts">
+            <div>
+              <dt>Institution</dt>
+              <dd>Vrije Universiteit Amsterdam</dd>
+            </div>
+            <div>
+              <dt>Format</dt>
+              <dd>Individual research</dd>
+            </div>
+            <div>
+              <dt>Thesis grade</dt>
+              <dd>9.0 / 10</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>RL · Morphology · Robotics</dd>
+            </div>
+          </dl>
+        </header>
+
+        <section class="case-section container" aria-labelledby="problem-title">
+          <div class="case-section-heading">
+            <p class="section-index">01</p>
+            <h2 id="problem-title">The problem</h2>
+          </div>
+          <div class="case-copy case-copy--lead">
+            <p>Snake robots can reach places that are difficult for wheeled or legged machines, but a gait that works on one surface may fail on another. I investigated whether the robot could become more robust by adapting both <em>how it moves</em> and <em>how its body contacts the ground</em>.</p>
+            <blockquote>
+              <p>Does spatial heterogeneity in passive scale design improve terrain-robust locomotion?</p>
+            </blockquote>
+            <p>The comparison covered homogeneous configurations, where every scale used the same geometry, and heterogeneous configurations that alternated between two designs.</p>
+          </div>
+        </section>
+
+        <figure class="visual-panel container-wide">
+          <svg class="robot-schematic" viewBox="0 0 1080 430" role="img" aria-labelledby="robot-title robot-desc">
+            <title id="robot-title">Schematic of the snake robot and experimental terrains</title>
+            <desc id="robot-desc">Eight connected modules form a curved snake robot. Alternating passive scales contact carpet and cardboard surfaces while an overhead OptiTrack system measures displacement.</desc>
+            <defs>
+              <pattern id="carpet-pattern" width="18" height="18" patternUnits="userSpaceOnUse">
+                <path d="M0 14 L5 7 L10 14 L15 7" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45"/>
+              </pattern>
+              <pattern id="board-pattern" width="28" height="28" patternUnits="userSpaceOnUse">
+                <path d="M0 27 H28 M27 0 V28" fill="none" stroke="currentColor" stroke-width="1" opacity="0.28"/>
+              </pattern>
+            </defs>
+
+            <text x="62" y="63" class="svg-label">EXISTING 8-MODULE PLATFORM</text>
+            <text x="798" y="63" class="svg-label">OPTITRACK</text>
+            <path d="M842 82 L781 152 M842 82 L894 154" class="tracking-line"/>
+            <circle cx="842" cy="82" r="10" class="tracking-point"/>
+            <circle cx="781" cy="152" r="5" class="tracking-point"/>
+            <circle cx="894" cy="154" r="5" class="tracking-point"/>
+
+            <g class="robot-body">
+              <g transform="translate(120 205) rotate(18)"><rect width="96" height="58" rx="8"/><path d="M18 59 L30 79 L48 59 M60 59 L72 79 L88 59" class="scale-a"/></g>
+              <g transform="translate(220 232) rotate(11)"><rect width="96" height="58" rx="8"/><path d="M18 59 L36 86 L50 59 M58 59 L78 86 L90 59" class="scale-b"/></g>
+              <g transform="translate(321 245) rotate(2)"><rect width="96" height="58" rx="8"/><path d="M18 59 L30 79 L48 59 M60 59 L72 79 L88 59" class="scale-a"/></g>
+              <g transform="translate(423 239) rotate(-10)"><rect width="96" height="58" rx="8"/><path d="M18 59 L36 86 L50 59 M58 59 L78 86 L90 59" class="scale-b"/></g>
+              <g transform="translate(520 212) rotate(-17)"><rect width="96" height="58" rx="8"/><path d="M18 59 L30 79 L48 59 M60 59 L72 79 L88 59" class="scale-a"/></g>
+              <g transform="translate(612 176) rotate(-19)"><rect width="96" height="58" rx="8"/><path d="M18 59 L36 86 L50 59 M58 59 L78 86 L90 59" class="scale-b"/></g>
+              <g transform="translate(704 147) rotate(-12)"><rect width="96" height="58" rx="8"/><path d="M18 59 L30 79 L48 59 M60 59 L72 79 L88 59" class="scale-a"/></g>
+              <g transform="translate(802 132) rotate(-2)"><rect width="96" height="58" rx="8"/><path d="M18 59 L36 86 L50 59 M58 59 L78 86 L90 59" class="scale-b"/></g>
+            </g>
+
+            <path d="M44 337 H532 V397 H44 Z" fill="url(#carpet-pattern)" class="terrain"/>
+            <path d="M548 337 H1036 V397 H548 Z" fill="url(#board-pattern)" class="terrain"/>
+            <text x="69" y="375" class="terrain-label">CARPET</text>
+            <text x="573" y="375" class="terrain-label">CARDBOARD</text>
+            <text x="1010" y="375" class="terrain-note">30 EPISODES PER DESIGN / TERRAIN</text>
+          </svg>
+          <figcaption>A simplified view of the experimental setup. The geometry is illustrative; the measurements and configuration are taken from the physical study.</figcaption>
+        </figure>
+
+        <section class="case-section container" aria-labelledby="scope-title">
+          <div class="case-section-heading">
+            <p class="section-index">02</p>
+            <h2 id="scope-title">My scope</h2>
+          </div>
+          <div class="case-copy">
+            <p>The base robot and parts of its control stack existed before the thesis. My work started from that platform rather than claiming the robot as a ground-up build.</p>
+            <ul class="plain-list contribution-list">
+              <li>Modelled, produced, and tested interchangeable passive scale configurations.</li>
+              <li>Designed and ran the carpet and cardboard experiments on physical hardware.</li>
+              <li>Trained and evaluated Soft Actor-Critic locomotion policies for each design.</li>
+              <li>Built a critic-guided particle swarm optimisation step to refine morphology.</li>
+              <li>Analysed both successful and failed refinement runs.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="case-section container" aria-labelledby="method-title">
+          <div class="case-section-heading">
+            <p class="section-index">03</p>
+            <h2 id="method-title">Method</h2>
+          </div>
+          <div class="case-copy">
+            <ol class="method-list">
+              <li>
+                <span class="method-number">01</span>
+                <div>
+                  <h3>Change the contact geometry</h3>
+                  <p>Scale width and attack angle defined the physical search space. Homogeneous designs shared one pair of parameters; heterogeneous designs alternated two pairs.</p>
+                </div>
+              </li>
+              <li>
+                <span class="method-number">02</span>
+                <div>
+                  <h3>Learn the gait</h3>
+                  <p>A Soft Actor-Critic agent learned locomotion for each scale configuration, with repeated trials on carpet and cardboard.</p>
+                </div>
+              </li>
+              <li>
+                <span class="method-number">03</span>
+                <div>
+                  <h3>Refine the body</h3>
+                  <p>The learned critic estimated candidate morphologies. Particle swarm optimisation then proposed a design intended to improve the weaker terrain.</p>
+                </div>
+              </li>
+              <li>
+                <span class="method-number">04</span>
+                <div>
+                  <h3>Return to hardware</h3>
+                  <p>Proposed configurations were manufactured and tested on the real robot rather than accepted from simulation or critic estimates alone.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="case-section container" id="results" aria-labelledby="results-title">
+          <div class="case-section-heading">
+            <p class="section-index">04</p>
+            <h2 id="results-title">Results</h2>
+          </div>
+          <div class="case-copy case-copy--lead">
+            <p>The strongest result came from the lower-dimensional homogeneous search. Optimisation raised its worst-terrain displacement from <strong>28.2 cm to 54.4 cm</strong>. The best unrefined heterogeneous design was already robust at <strong>50.4 cm</strong>, but its subsequent refinement did not transfer to the robot.</p>
+          </div>
+        </section>
+
+        <figure class="visual-panel results-panel container-wide">
+          <svg class="results-chart" viewBox="0 0 900 470" role="img" aria-labelledby="chart-title chart-desc">
+            <title id="chart-title">Worst-terrain displacement before and after refinement</title>
+            <desc id="chart-desc">For the homogeneous design, displacement improved from 28.2 to 54.4 centimetres. For the heterogeneous design, the strong initial result of 50.4 centimetres fell to 6.6 centimetres after an unsuccessful refinement.</desc>
+            <text x="62" y="54" class="chart-kicker">WORST-TERRAIN DISPLACEMENT · CM · HIGHER IS BETTER</text>
+
+            <g class="chart-grid">
+              <line x1="90" y1="370" x2="848" y2="370"/>
+              <line x1="90" y1="320" x2="848" y2="320"/>
+              <line x1="90" y1="270" x2="848" y2="270"/>
+              <line x1="90" y1="220" x2="848" y2="220"/>
+              <line x1="90" y1="170" x2="848" y2="170"/>
+              <line x1="90" y1="120" x2="848" y2="120"/>
+              <line x1="90" y1="70" x2="848" y2="70"/>
+            </g>
+            <g class="chart-axis-labels">
+              <text x="61" y="375">0</text>
+              <text x="52" y="325">10</text>
+              <text x="52" y="275">20</text>
+              <text x="52" y="225">30</text>
+              <text x="52" y="175">40</text>
+              <text x="52" y="125">50</text>
+              <text x="52" y="75">60</text>
+            </g>
+
+            <g class="chart-bars">
+              <rect x="154" y="229" width="104" height="141" class="bar bar--before"/>
+              <rect x="278" y="98" width="104" height="272" class="bar bar--after"/>
+              <rect x="522" y="118" width="104" height="252" class="bar bar--before"/>
+              <rect x="646" y="337" width="104" height="33" class="bar bar--failed"/>
+            </g>
+            <g class="bar-values">
+              <text x="206" y="211">28.2</text>
+              <text x="330" y="80">54.4</text>
+              <text x="574" y="100">50.4</text>
+              <text x="698" y="319">6.6</text>
+            </g>
+            <g class="bar-labels">
+              <text x="206" y="398">INITIAL</text>
+              <text x="330" y="398">REFINED</text>
+              <text x="574" y="398">INITIAL</text>
+              <text x="698" y="398">REFINED</text>
+              <text x="268" y="440" class="group-label">HOMOGENEOUS</text>
+              <text x="636" y="440" class="group-label">HETEROGENEOUS</text>
+            </g>
+          </svg>
+          <figcaption>The homogeneous refinement transferred successfully to hardware. The heterogeneous proposal did not.</figcaption>
+        </figure>
+
+        <section class="case-section container" aria-labelledby="failure-title">
+          <div class="case-section-heading">
+            <p class="section-index">05</p>
+            <h2 id="failure-title">What failed</h2>
+          </div>
+          <div class="case-copy">
+            <p>The heterogeneous optimiser proposed a configuration whose worst-terrain result dropped from 50.4 cm to 6.6 cm. This was not hidden or averaged away.</p>
+            <p>The likely issue was coverage. A heterogeneous body created a four-dimensional morphology space, while the available physical trials covered only a small part of it. The critic could guide refinement in the simpler homogeneous space, but its estimates were not reliable enough in the larger search.</p>
+            <aside class="finding-note">
+              <p class="small-label">Interpretation</p>
+              <p>Passive heterogeneity can produce strong locomotion, but this study did not show that it is always necessary or easier to optimise.</p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="case-section container" aria-labelledby="hardware-title">
+          <div class="case-section-heading">
+            <p class="section-index">06</p>
+            <h2 id="hardware-title">Real hardware</h2>
+          </div>
+          <div class="case-copy">
+            <p>The experimental work was as much about making the system dependable as it was about training policies. Motors overheated, one had to be replaced, TPU scales needed repeated printing, and small physical changes could alter a run. Parts of the control code were also undocumented.</p>
+            <p>Working through those failures changed how I evaluate an AI result: a promising metric is only useful if the full system can reproduce it outside the optimiser.</p>
+
+            <dl class="tools-list">
+              <div><dt>Learning</dt><dd>Soft Actor-Critic</dd></div>
+              <div><dt>Optimisation</dt><dd>Particle swarm optimisation</dd></div>
+              <div><dt>Tracking</dt><dd>OptiTrack</dd></div>
+              <div><dt>Implementation</dt><dd>Python</dd></div>
+              <div><dt>Prototyping</dt><dd>3D-printed passive scales</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="case-section case-conclusion container" aria-labelledby="conclusion-title">
+          <div class="case-section-heading">
+            <p class="section-index">07</p>
+            <h2 id="conclusion-title">Takeaway</h2>
+          </div>
+          <div class="case-copy case-copy--lead">
+            <p>Co-adaptation worked when the morphology search was constrained and sufficiently represented by real trials. The project also showed where it stopped working: a higher-dimensional design space needs broader data or a more cautious refinement method.</p>
+            <a class="detail-link" href="/"><span aria-hidden="true">←</span> Back to selected work</a>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer container">
+      <p>© 2026 Bazyli Kok</p>
+      <a href="mailto:bazylikok@gmail.com">bazylikok@gmail.com</a>
+    </footer>
+  </body>
+</html>

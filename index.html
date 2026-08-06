@@ -1,13 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-</head>
-<body>
-    <h1>Hello, world!</h1>
-    <p>Welcome to my website hosted on GitHub Pages.</p>
-</body>
-</html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="Portfolio of Bazyli Kok, a VU Amsterdam Artificial Intelligence graduate working across machine learning, reinforcement learning, robotics, and intelligent systems.">
 
+    <title>Bazyli Kok — Artificial Intelligence Graduate</title>
+    <link rel="canonical" href="https://bazylikok.github.io/">
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bazyli Kok — Artificial Intelligence Graduate">
+    <meta property="og:description" content="Machine learning, reinforcement learning, robotics, and intelligent systems.">
+    <meta property="og:url" content="https://bazylikok.github.io/">
+    <meta property="og:image" content="https://bazylikok.github.io/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Bazyli Kok — Artificial Intelligence graduate in Warsaw">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Bazyli Kok",
+        "url": "https://bazylikok.github.io/",
+        "email": "mailto:bazylikok@gmail.com",
+        "jobTitle": "Artificial Intelligence Graduate",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Vrije Universiteit Amsterdam"
+        },
+        "homeLocation": {
+          "@type": "Place",
+          "name": "Warsaw, Poland"
+        },
+        "sameAs": [
+          "https://github.com/BazyliKok",
+          "https://www.linkedin.com/in/bazyli-kok-010882382/"
+        ],
+        "knowsAbout": [
+          "Machine learning",
+          "Reinforcement learning",
+          "Robotics",
+          "Knowledge representation",
+          "Artificial intelligence"
+        ]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/" aria-label="BK. — Bazyli Kok, home">BK<span aria-hidden="true">.</span></a>
+        <nav aria-label="Primary">
+          <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero container" aria-labelledby="hero-title">
+        <div class="hero-heading">
+          <p class="eyebrow">Artificial intelligence · Warsaw</p>
+          <h1 id="hero-title">Bazyli Kok</h1>
+        </div>
+
+        <div class="hero-intro">
+          <p class="hero-copy">AI graduate working across machine learning, reinforcement learning, and intelligent systems.</p>
+          <div class="hero-details">
+            <p>Based in Warsaw. Open to junior AI/ML and adjacent software roles.</p>
+            <ul class="text-links" aria-label="Contact and profile links">
+              <li><a href="mailto:bazylikok@gmail.com">Email</a></li>
+              <li><a href="https://www.linkedin.com/in/bazyli-kok-010882382/" target="_blank" rel="noreferrer">LinkedIn<span class="external-mark" aria-hidden="true">↗</span></a></li>
+              <li><a href="https://github.com/BazyliKok" target="_blank" rel="noreferrer">GitHub<span class="external-mark" aria-hidden="true">↗</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="work" aria-labelledby="work-title">
+        <div class="section-layout">
+          <div class="section-heading">
+            <p class="section-index">01</p>
+            <h2 id="work-title">Selected work</h2>
+          </div>
+
+          <div class="project-list">
+            <article class="project">
+              <div class="project-number" aria-hidden="true">01</div>
+              <div class="project-body">
+                <p class="project-type">Bachelor thesis · Individual research</p>
+                <h3><a href="/thesis/">Terrain-robust locomotion for a snake robot</a></h3>
+                <p class="project-summary">I studied whether passive scale design could make a physical eight-module snake robot move reliably across different surfaces. The work combined hardware experiments, Soft Actor-Critic gait learning, and critic-guided particle swarm optimisation.</p>
+                <ul class="project-stack" aria-label="Methods used">
+                  <li>Reinforcement learning</li>
+                  <li>Robotics</li>
+                  <li>Physical experiments</li>
+                  <li>Optimisation</li>
+                </ul>
+                <a class="detail-link" href="/thesis/">Read the case study <span aria-hidden="true">→</span></a>
+              </div>
+              <dl class="project-evidence">
+                <div>
+                  <dt>Worst-terrain result</dt>
+                  <dd><span>28.2</span> → <span>54.4</span> cm</dd>
+                </div>
+                <div>
+                  <dt>Thesis grade</dt>
+                  <dd>9.0 / 10</dd>
+                </div>
+              </dl>
+            </article>
+
+            <article class="project">
+              <div class="project-number" aria-hidden="true">02</div>
+              <div class="project-body">
+                <p class="project-type">Course project · Two-person team</p>
+                <h3>Logic-grounded hotel assistant</h3>
+                <p class="project-summary">We built a hotel assistant that translated natural-language requests into SPARQL queries over an OWL/RDF knowledge graph. Retrieved facts were passed to a local language model, with deterministic checks to reduce unsupported entities and attributes.</p>
+                <p class="project-note"><strong>My role:</strong> shared implementation and evaluation across the full pipeline.</p>
+                <ul class="project-stack" aria-label="Technologies used">
+                  <li>OWL 2</li>
+                  <li>RDFLib</li>
+                  <li>SPARQL</li>
+                  <li>Ollama</li>
+                </ul>
+              </div>
+              <dl class="project-evidence">
+                <div>
+                  <dt>Result IoU</dt>
+                  <dd>0.90</dd>
+                </div>
+                <div>
+                  <dt>Query IoU</dt>
+                  <dd>0.819</dd>
+                </div>
+                <div>
+                  <dt>What remained</dt>
+                  <dd class="evidence-copy">Unsupported details and overly long answers in harder cases.</dd>
+                </div>
+              </dl>
+            </article>
+
+            <article class="project">
+              <div class="project-number" aria-hidden="true">03</div>
+              <div class="project-body">
+                <p class="project-type">Applied programming · Three-person team</p>
+                <h3>SkySound</h3>
+                <p class="project-summary">A Flask application that combined local weather with a listener’s Spotify preferences to create a matching playlist, including a generated name, description, and cover.</p>
+                <p class="project-note"><strong>My contribution:</strong> playlist-management UI, frontend interactions and styling, generated cover/name/description integration, and bug fixes.</p>
+                <ul class="project-stack" aria-label="Technologies used">
+                  <li>Python</li>
+                  <li>Flask</li>
+                  <li>Spotify API</li>
+                  <li>Weather API</li>
+                  <li>SQLite</li>
+                </ul>
+              </div>
+              <div class="project-evidence project-evidence--note">
+                <p class="status-label">Repository</p>
+                <p>Not linked until its credentials and history have been cleaned.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="about" aria-labelledby="about-title">
+        <div class="section-layout">
+          <div class="section-heading">
+            <p class="section-index">02</p>
+            <h2 id="about-title">Background</h2>
+          </div>
+
+          <div class="about-content">
+            <div class="profile-copy">
+              <p>I recently completed a BSc in Artificial Intelligence at Vrije Universiteit Amsterdam. My work has ranged from reinforcement learning on physical robots to knowledge-graph and API-based systems.</p>
+              <p>I am now looking for a junior role where I can contribute across the AI stack, build practical systems, and learn from an experienced team.</p>
+            </div>
+
+            <div class="education-block">
+              <div class="education-title">
+                <p class="small-label">Education</p>
+                <h3>BSc Artificial Intelligence</h3>
+                <p>Vrije Universiteit Amsterdam · 2026</p>
+              </div>
+              <div>
+                <p class="small-label">Selected study areas</p>
+                <ul class="study-list">
+                  <li>Machine learning and reinforcement learning</li>
+                  <li>Robotics and situated AI</li>
+                  <li>Knowledge representation and formal logic</li>
+                  <li>Programming, algorithms, and data structures</li>
+                  <li>Responsible and human-centred AI</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section container" id="contact" aria-labelledby="contact-title">
+        <div class="section-layout">
+          <div class="section-heading">
+            <p class="section-index">03</p>
+            <h2 id="contact-title">Contact</h2>
+          </div>
+
+          <div class="contact-content">
+            <p>For roles or project questions, email is the fastest way to reach me.</p>
+            <a class="email-link" href="mailto:bazylikok@gmail.com">bazylikok@gmail.com</a>
+            <ul class="text-links contact-links" aria-label="Professional profiles">
+              <li><a href="https://www.linkedin.com/in/bazyli-kok-010882382/" target="_blank" rel="noreferrer">LinkedIn<span class="external-mark" aria-hidden="true">↗</span></a></li>
+              <li><a href="https://github.com/BazyliKok" target="_blank" rel="noreferrer">GitHub<span class="external-mark" aria-hidden="true">↗</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p>© 2026 Bazyli Kok</p>
+      <a href="#main-content">Back to top <span aria-hidden="true">↑</span></a>
+    </footer>
+  </body>
+</html>
